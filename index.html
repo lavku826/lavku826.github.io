@@ -1,0 +1,665 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+  }
+
+  .modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .close {
+    color: red;
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lavkush online tool</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Courier New', monospace;
+      background-color: black;
+      color: #00ff00;
+      overflow-x: hidden;
+    }
+    header {
+      background-color: #003300;
+      color: #00ff00;
+      padding: 20px;
+      text-align: center;
+      font-size: 28px;
+      border-bottom: 2px solid #00ff00;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .tool {
+      background-color: rgba(0, 50, 0, 0.8);
+      padding: 20px;
+      margin: 20px auto;
+      border: 1px solid #00ff00;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 0 10px #00ff00;
+    }
+    h2, h3, label, p {
+      color: #00ff00;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background-color: #001a00;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      border-radius: 8px;
+    }
+    button:hover {
+      background-color: #004d00;
+      cursor: pointer;
+<!-- About Modal -->
+<div id="aboutModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('aboutModal')">&times;</span>
+    <h2>📖 About</h2>
+    <p>This website offers useful tools created by Lavkush.</p>
+  </div>
+</div>
+
+<!-- Privacy Modal -->
+<div id="privacyModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('privacyModal')">&times;</span>
+    <h2>🔐 Privacy Policy</h2>
+    <p>No personal data is stored. Everything runs locally on your browser.</p>
+  </div>
+</div>
+
+<!-- Contact Modal -->
+<div id="contactModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('contactModal')">&times;</span>
+    <h2>📬 Contact</h2>
+    <p>Email: lavkushchaudhary181@gmail.com</p>
+  </div>
+</div>
+<script>
+  function openModal(id) {
+    document.getElementById(id).style.display = "block";
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  }
+</script>
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #00ff00;
+      border-top: 1px solid #00ff00;
+    }
+    /* Binary Rain */
+    .matrix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: black;
+    }
+    canvas {
+      display: block;
+    }
+html {
+  scroll-behavior: smooth;
+}
+  </style>
+</head>
+<body>
+
+<div class="matrix">
+  <canvas id="matrix"></canvas>
+</div>
+
+<header><nav style="background: #2c2c2c; padding: 10px; text-align: center; position: sticky; top: 0; z-index: 99;">
+  <a href="#about" style="color: white; margin: 0 15px; text-decoration: none;">About</a>
+  <a href="#privacy" style="color: white; margin: 0 15px; text-decoration: none;">Privacy</a>
+  <a href="#contact" style="color: white; margin: 0 15px; text-decoration: none;">Contact</a>
+</nav><nav style="background: #2c2c2c; padding: 10px; text-align: center;">
+  <a href="index.html" style="color: white; margin: 0 15px; text-decoration: none;">Home</a>
+  <a href="about.html" style="color: white; margin: 0 15px; text-decoration: none;">About</a>
+  <a href="privacy.html" style="color: white; margin: 0 15px; text-decoration: none;">Privacy</a>
+  <a href="contact.html" style="color: white; margin: 0 15px; text-decoration: none;">Contact</a>
+</nav>💻 Lavkush online free  Tools 💻</header>
+
+
+<!-- TOOL 1: Currency Converter -->
+<div class="tool">
+  <h3>💱 Currency Converter</h3>
+  <input type="number" id="inr" placeholder="Enter amount in INR ₹">
+  <button onclick="convert()">Convert to USD</button>
+  <p id="result"></p>
+</div>
+
+<!-- TOOL 2: BMI Calculator -->
+<div class="tool">
+  <h3>💪 BMI Calculator</h3>
+  <select id="heightUnit" onchange="toggleHeightInput()">
+    <option value="cm">Centimeters (cm)</option>
+    <option value="ft">Feet + Inches</option>
+  </select>
+  <div id="cmInput">
+    <input type="number" id="heightCm" placeholder="Height in cm">
+  </div>
+  <div id="ftInput" style="display:none;">
+    <input type="number" id="heightFt" placeholder="Feet">
+    <input type="number" id="heightIn" placeholder="Inches">
+  </div>
+  <input type="number" id="weight" placeholder="Weight in kg">
+  <button onclick="calculateBMI()">Calculate</button>
+  <p id="bmiResult"></p>
+</div>
+
+<!-- TOOL 3: YouTube Thumbnail Downloader -->
+<div class="tool">
+  <h3>📺 YouTube Thumbnail Downloader</h3>
+  <input type="text" id="videoURL" placeholder="Paste YouTube video link">
+  <button onclick="getThumbnail()">Get Thumbnail</button>
+  <div id="output"></div>
+</div>
+
+<!-- TOOL 4: Age Calculator -->
+<div class="tool">
+  <h3>🎂 Age Calculator</h3>
+  <input type="date" id="dob">
+  <button onclick="calculateAge()">Calculate</button>
+  <div id="ageResult"></div>
+</div>
+
+<!-- Tool 5: Password Generator -->
+<div class="tool">
+  <h2>🔐 Password Generator</h2>
+  <label for="length">Password Length:</label>
+  <input type="number" id="length" min="4" max="32" value="12">
+
+  <label><input type="checkbox" id="lowercase" checked> Include Lowercase</label><br>
+  <label><input type="checkbox" id="uppercase" checked> Include Uppercase</label><br>
+  <label><input type="checkbox" id="numbers" checked> Include Numbers</label><br>
+  <label><input type="checkbox" id="symbols"> Include Symbols</label><br>
+
+  <button onclick="generatePassword()">Generate Password</button>
+  <p id="passwordResult" style="word-wrap: break-word;"></p>
+</div>
+
+<!-- Tool 5: QR Code Generator -->
+<div class="tool">
+  <h2>📱 QR Code Generator</h2>
+  <input type="text" id="qrText" placeholder="Enter text or link">
+  <button onclick="generateQR()">Generate QR Code</button>
+  <div id="qrResult" style="margin-top: 20px;"></div>
+</div>
+<!-- About Section -->
+<div id="about" class="tool">
+  <h2>📖 About</h2>
+  <p>Welcome to Lavkush’s Tool Hub – your place for free useful online tools like converter, calculators, and more.</p>
+</div>
+
+<!-- Privacy Section -->
+<div id="privacy" class="tool">
+  <h2>🔐 Privacy Policy</h2>
+  <p>We respect your privacy. No user data is stored or shared. This website uses no cookies or tracking.</p>
+</div>
+
+<!-- Contact Section -->
+<div id="contact" class="tool">
+  <h2>📬 Contact</h2>
+  <p>If you want to contact Lavkush, email at: <strong>lavkushchaudhary181@gmail.com</strong></p>
+</div>
+<footer>
+  &copy; 2025 Lavkush Chaudhary - All Hacker Rights Reserved
+</footer>
+
+<script>
+function convert() {
+  let inr = document.getElementById("inr").value;
+  let usd = inr / 83.2;
+  document.getElementById("result").innerText = "USD $: " + usd.toFixed(2);
+}
+
+function toggleHeightInput() {
+  const unit = document.getElementById("heightUnit").value;
+  document.getElementById("cmInput").style.display = unit === "cm" ? "block" : "none";
+  document.getElementById("ftInput").style.display = unit === "ft" ? "block" : "none";
+}
+
+function calculateBMI() {
+  let height = 0;
+  const weight = parseFloat(document.getElementById("weight").value);
+  const unit = document.getElementById("heightUnit").value;
+
+  if (unit === "cm") {
+    height = parseFloat(document.getElementById("heightCm").value) / 100;
+  } else {
+    const feet = parseFloat(document.getElementById("heightFt").value);
+    const inches = parseFloat(document.getElementById("heightIn").value);
+    height = ((feet * 12) + inches) * 0.0254;
+  }
+
+  if (!height || !weight || height <= 0 || weight <= 0) {
+    document.getElementById("bmiResult").innerText = "❗ Please enter valid height and weight.";
+    return;
+  }
+
+  const bmi = weight / (height * height);
+  let message = "✅ Your BMI is: " + bmi.toFixed(2);
+  if (bmi < 18.5) message += " (Underweight)";
+  else if (bmi < 24.9) message += " (Normal)";
+  else if (bmi < 29.9) message += " (Overweight)";
+  else message += " (Obese)";
+  document.getElementById("bmiResult").innerText = message;
+}
+
+function getThumbnail() {
+  const url = document.getElementById("videoURL").value.trim();
+  let videoID = "";
+  try {
+    const ytURL = new URL(url);
+    if (ytURL.hostname === "youtu.be") videoID = ytURL.pathname.slice(1);
+    else if (ytURL.hostname.includes("youtube.com")) videoID = ytURL.searchParams.get("v");
+  } catch (e) {
+    alert("⚠️ Invalid URL format.");
+    return;
+  }
+  if (!videoID) {
+    alert("⚠️ Could not extract video ID.");
+    return;
+  }
+  const imgURL = `https://img.youtube.com/vi/${videoID}/maxresdefault.jpg`;
+  document.getElementById("output").innerHTML = `
+    <img src="${imgURL}" alt="Thumbnail" style="margin-top:20px; max-width:100%;">
+    <br><br>
+    <a href="${imgURL}" download="thumbnail.jpg">
+      <button>⬇️ Download Thumbnail</button>
+    </a>
+  `;
+}
+
+function calculateAge() {
+  const dob = new Date(document.getElementById("dob").value);
+  if (!dob.getTime()) {
+    document.getElementById("ageResult").innerHTML = "⚠️ Enter a valid date of birth!";
+    return;
+  }
+  const today = new Date();
+  let years = today.getFullYear() - dob.getFullYear();
+  let months = today.getMonth() - dob.getMonth();
+  let days = today.getDate() - dob.getDate();
+
+  if (days < 0) {
+    months--;
+    days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+  }
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+  document.getElementById("ageResult").innerHTML = `🎉 You are <b>${years}</b> years, <b>${months}</b> months, and <b>${days}</b> days old.`;
+}
+function generatePassword() {
+  const length = parseInt(document.getElementById("length").value);
+  const useLower = document.getElementById("lowercase").checked;
+  const useUpper = document.getElementById("uppercase").checked;
+  const useNumber = document.getElementById("numbers").checked;
+  const useSymbol = document.getElementById("symbols").checked;
+
+  const lower = "abcdefghijklmnopqrstuvwxyz";
+  const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const numbers = "0123456789";
+  const symbols = "!@#$%^&*()_+{}[]<>?/|";
+
+  let allChars = "";
+  if (useLower) allChars += lower;
+  if (useUpper) allChars += upper;
+  if (useNumber) allChars += numbers;
+  if (useSymbol) allChars += symbols;
+
+  if (allChars.length === 0) {
+    document.getElementById("passwordResult").innerText = "❗ Please select at least one option.";
+    return;
+  }
+
+  let password = "";
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * allChars.length);
+    password += allChars[randomIndex];
+  }
+
+  document.getElementById("passwordResult").innerText = `🔑 ${password}`;
+}
+</script>
+
+<!-- Matrix Effect -->
+<script>
+var canvas = document.getElementById("matrix");
+var ctx = canvas.getContext("2d");
+
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+
+var letters = Array(256).join("01").split("");
+var fontSize = 14;
+
+function draw() {
+  ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#0F0";
+  letters.map((y_pos, index) => {
+    text = String.fromCharCode(1 + Math.random() * 127);
+    x_pos = index * fontSize;
+    ctx.fillText(text, x_pos, y_pos);
+    letters[index] = y_pos > 100 + Math.random() * 10000 ? 0 : y_pos + fontSize;
+  });
+}
+
+setInterval(draw, 33);
+
+function generateQR() {
+  const text = document.getElementById("qrText").value.trim();
+  if (!text) {
+    document.getElementById("qrResult").innerHTML = "❗ Please enter something to generate QR.";
+    return;
+  }
+  const qrURL = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(text)}`;
+  document.getElementById("qrResult").innerHTML = `<img src="${qrURL}" alt="QR Code">`;
+}
+</script>
+
+</body>
+</html>
+<body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lavkush's Online Tools</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #0d0d0d;
+      color: white;
+    }
+    header {
+      background: #1f1f1f;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .tool-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 20px;
+    }
+    .tool-button {
+      background: #333;
+      color: #00ffcc;
+      border: 2px solid #00ffcc;
+      padding: 15px 20px;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .tool-button:hover {
+      background: #00ffcc;
+      color: black;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal-content {
+      background: #1a1a1a;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+    }
+    .close {
+      position: absolute;
+      top: 10px; right: 15px;
+      font-size: 22px;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<header>🔧 Lavkush's Online Tools 🔧</header>
+
+<div class="tool-list">
+  <!-- 20 Tool Buttons -->
+  <button class="tool-button" onclick="openModal(1)">Password Generator</button>
+  <button class="tool-button" onclick="openModal(2)">Age Calculator</button>
+  <button class="tool-button" onclick="openModal(3)">BMI Calculator</button>
+  <button class="tool-button" onclick="openModal(4)">Currency Converter</button>
+  <button class="tool-button" onclick="openModal(5)">YouTube Thumbnail Downloader</button>
+  <button class="tool-button" onclick="openModal(6)">QR Code Generator</button>
+  <button class="tool-button" onclick="openModal(7)">Loan EMI Calculator</button>
+  <button class="tool-button" onclick="openModal(8)">Stopwatch</button>
+  <button class="tool-button" onclick="openModal(9)">Timer</button>
+  <button class="tool-button" onclick="openModal(10)">Random Number Generator</button>
+  <button class="tool-button" onclick="openModal(11)">Text to Speech</button>
+  <button class="tool-button" onclick="openModal(12)">Word Counter</button>
+  <button class="tool-button" onclick="openModal(13)">Character Counter</button>
+  <button class="tool-button" onclick="openModal(14)">Color Picker</button>
+  <button class="tool-button" onclick="openModal(15)">Base64 Encoder</button>
+  <button class="tool-button" onclick="openModal(16)">Base64 Decoder</button>
+  <button class="tool-button" onclick="openModal(17)">IP Address Finder</button>
+  <button class="tool-button" onclick="openModal(18)">Temperature Converter</button>
+  <button class="tool-button" onclick="openModal(19)">Speed Test (dummy)</button>
+  <button class="tool-button" onclick="openModal(20)">Fake Email Generator</button>
+</div>
+
+<!-- 20 Modals -->
+<!-- Modal 1: Password Generator -->
+<div class="modal" id="modal1">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal(1)">&times;</span>
+    <h2>🔐 Password Generator</h2>
+    <label for="length">Password Length:</label>
+    <input type="number" id="length" value="12" min="4" max="32"><br>
+    <label><input type="checkbox" id="uppercase" checked> Include Uppercase</label><br>
+    <label><input type="checkbox" id="lowercase" checked> Include Lowercase</label><br>
+    <label><input type="checkbox" id="numbers" checked> Include Numbers</label><br>
+    <label><input type="checkbox" id="symbols"> Include Symbols</label><br><br>
+    <button onclick="generatePassword()">Generate</button>
+    <p id="passwordOutput" style="font-weight:bold;margin-top:10px;"></p>
+  </div>
+</div>
+
+<!-- Modal 2: Age Calculator -->
+<div class="modal" id="modal2">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal(2)">&times;</span>
+    <h2>🎂 Age Calculator</h2>
+    <input type="date" id="dob" />
+    <br>
+    <button onclick="calculateAge()">Calculate Age</button>
+    <p id="ageResult" style="margin-top: 15px; font-weight: bold;"></p>
+  </div>
+</div>
+
+<footer style="text-align:center;padding:10px;background:#1f1f1f;color:white;">
+  &copy; 2025 Lavkush Chaudhary. All rights reserved.
+</footer>
+
+<script>
+<script>
+  const modalContainer = document.getElementById("modal-container");
+
+  for (let i = 1; i <= 20; i++) {
+    const div = document.createElement("div");
+    div.className = "modal";
+    div.id = `modal${i}`;
+
+    let content = "";
+
+    if (i === 1) {
+      content = `
+        <h2>🔐 Password Generator</h2>
+        <label for="length">Password Length:</label>
+        <input type="number" id="length" value="12" min="4" max="32"><br>
+        <label><input type="checkbox" id="uppercase" checked> Include Uppercase</label><br>
+        <label><input type="checkbox" id="lowercase" checked> Include Lowercase</label><br>
+        <label><input type="checkbox" id="numbers" checked> Include Numbers</label><br>
+        <label><input type="checkbox" id="symbols"> Include Symbols</label><br><br>
+        <button onclick="generatePassword()">Generate</button>
+        <p id="passwordOutput" style="font-weight:bold;margin-top:10px;"></p>
+      `;
+    } else if (i === 2) {
+      content = `
+        <h2>🎂 Age Calculator</h2>
+        <input type="date" id="dob"><br>
+        <button onclick="calculateAge()">Calculate Age</button>
+        <p id="ageResult" style="margin-top: 15px; font-weight: bold;"></p>
+      `;
+      }
+
+    div.innerHTML = `
+      <div class="modal-content">
+        <span class="close" onclick="closeModal(${i})">&times;</span>
+        ${content}
+      </div>
+    `;
+    modalContainer.appendChild(div);
+  }
+
+  function openModal(id) {
+    document.getElementById(`modal${id}`).style.display = "flex";
+  }
+
+  function closeModal(id) {
+    document.getElementById(`modal${id}`).style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    for (let i = 1; i <= 20; i++) {
+      const modal = document.getElementById(`modal${i}`);
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    }
+  };
+
+  function generatePassword() {
+    const length = document.getElementById("length").value;
+    const includeUppercase = document.getElementById("uppercase").checked;
+    const includeLowercase = document.getElementById("lowercase").checked;
+    const includeNumbers = document.getElementById("numbers").checked;
+    const includeSymbols = document.getElementById("symbols").checked;
+
+    let chars = "";
+    if (includeUppercase) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    if (includeLowercase) chars += "abcdefghijklmnopqrstuvwxyz";
+    if (includeNumbers) chars += "0123456789";
+    if (includeSymbols) chars += "!@#$%^&*()_+{}[]<>?";
+
+    let password = "";
+    for (let i = 0; i < length; i++) {
+      password += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    document.getElementById("passwordOutput").innerText = password || "❗ Select at least one option!";
+  }
+
+  function calculateAge() {
+    const dob = new Date(document.getElementById("dob").value);
+    if (!dob.getTime()) {
+      document.getElementById("ageResult").innerText = "⚠️ Please enter a valid DOB!";
+      return;
+    }
+
+    const today = new Date();
+    let years = today.getFullYear() - dob.getFullYear();
+    let months = today.getMonth() - dob.getMonth();
+    let days = today.getDate() - dob.getDate();
+
+    if (days < 0) {
+      months--;
+      days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+    }
+
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+
+    document.getElementById("ageResult").innerHTML = `🎉 You are <b>${years}</b> years, <b>${months}</b> months, and <b>${days}</b> days old.`;
+  }
+function openModal(id) {
+  document.getElementById(`modal${id}`).classList.add("show");
+}
+
+function closeModal(id) {
+  document.getElementById(`modal${id}`).classList.remove("show");
+}
+
+// Optional: Close modal when clicked outside
+window.onclick = function(event) {
+  for (let i = 1; i <= 20; i++) {
+    const modal = document.getElementById(`modal${i}`);
+    if (event.target === 

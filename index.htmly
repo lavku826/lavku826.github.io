@@ -1,0 +1,157 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lavkush's Online Tools</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #0d0d0d;
+      color: white;
+    }
+    header {
+      background: #1f1f1f;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .tool-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 20px;
+    }
+    .tool-button {
+      background: #333;
+      color: #00ffcc;
+      border: 2px solid #00ffcc;
+      padding: 15px 20px;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .tool-button:hover {
+      background: #00ffcc;
+      color: black;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal.show {
+      display: flex;
+    }
+    .modal-content {
+      background: #1a1a1a;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+    }
+    .close {
+      position: absolute;
+      top: 10px; right: 15px;
+      font-size: 22px;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body><header>🔧 Lavkush's Online Tools 🔧</header><div class="tool-list">
+  <button class="tool-button" onclick="openModal(1)">Password Generator</button>
+  <button class="tool-button" onclick="openModal(2)">Age Calculator</button>
+</div><!-- 20 Modals --><div id="modal-container">
+  <div class="modal" id="modal1">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal(1)">&times;</span>
+      <h2>🔐 Password Generator</h2>
+      <label>Password Length:</label>
+      <input type="number" id="length" value="12" min="4" max="32"><br>
+      <label><input type="checkbox" id="uppercase" checked> Include Uppercase</label><br>
+      <label><input type="checkbox" id="lowercase" checked> Include Lowercase</label><br>
+      <label><input type="checkbox" id="numbers" checked> Include Numbers</label><br>
+      <label><input type="checkbox" id="symbols"> Include Symbols</label><br><br>
+      <button onclick="generatePassword()">Generate</button>
+      <p id="passwordOutput"></p>
+    </div>
+  </div>  <div class="modal" id="modal2">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal(2)">&times;</span>
+      <h2>🎂 Age Calculator</h2>
+      <input type="date" id="dob" />
+      <button onclick="calculateAge()">Calculate Age</button>
+      <p id="ageResult"></p>
+    </div>
+  </div>
+</div><footer style="text-align:center;padding:10px;background:#1f1f1f;color:white;">
+  &copy; 2025 Lavkush Chaudhary. All rights reserved.
+</footer><script>
+  function openModal(id) {
+    document.getElementById(`modal${id}`).classList.add("show");
+  }
+  function closeModal(id) {
+    document.getElementById(`modal${id}`).classList.remove("show");
+  }
+  window.onclick = function(event) {
+    for (let i = 1; i <= 2; i++) {
+      const modal = document.getElementById(`modal${i}`);
+      if (event.target === modal) {
+        modal.classList.remove("show");
+      }
+    }
+  }
+
+  function generatePassword() {
+    const length = document.getElementById("length").value;
+    const upper = document.getElementById("uppercase").checked;
+    const lower = document.getElementById("lowercase").checked;
+    const num = document.getElementById("numbers").checked;
+    const sym = document.getElementById("symbols").checked;
+    let chars = "";
+    if (upper) chars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    if (lower) chars += "abcdefghijklmnopqrstuvwxyz";
+    if (num) chars += "0123456789";
+    if (sym) chars += "!@#$%^&*()_+{}[]<>?";
+    let pwd = "";
+    for (let i = 0; i < length; i++) {
+      pwd += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    document.getElementById("passwordOutput").innerText = pwd || "Select at least one option!";
+  }
+
+  function calculateAge() {
+    const dob = new Date(document.getElementById("dob").value);
+    if (!dob.getTime()) {
+      document.getElementById("ageResult").innerText = "Enter valid DOB!";
+      return;
+    }
+    const today = new Date();
+    let years = today.getFullYear() - dob.getFullYear();
+    let months = today.getMonth() - dob.getMonth();
+    let days = today.getDate() - dob.getDate();
+    if (days < 0) {
+      months--;
+      days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+    }
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+    document.getElementById("ageResult").innerText = `You are ${years} years, ${months} months, ${days} days old.`;
+  }
+</script></body>
+</html>
