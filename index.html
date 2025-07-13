@@ -1,5 +1,7 @@
 <!DOCTYPE html><html lang="en">
 <head>
+<!-- Face API JS -->
+<script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lavkush's Ultimate Tool Hub</title>
@@ -91,7 +93,49 @@
   <button onclick="findMobileInfo()">Find Info</button>
   <p id="mobileResult"></p>
 </div>
+<div class="tool-section" id="face-age-estimator">
+  <h2>📷 Face Age Estimator</h2>
+  <input type="file" id="imageUpload" accept=".jpg, .jpeg, .png">
+  <br><br>
+  <div style="position: relative;">
+    <canvas id="canvas"></canvas>
+  </div>
+  <p id="result" style="margin-top: 10px;"></p>
+</div>
 
+<script>
+  const imageUpload = document.getElementById('imageUpload');
+  const resultText = document.getElementById('result');
+  const canvas = document.getElementById('canvas');
+
+  Promise.all([
+    faceapi.nets.tinyFaceDetector.loadFromUri('https://cdn.jsdelivr.net/npm/face-api.js/weights'),
+    faceapi.nets.ageGenderNet.loadFromUri('https://cdn.jsdelivr.net/npm/face-api.js/weights')
+  ]).then(() => {
+    console.log('Models loaded');
+  });
+
+  imageUpload.addEventListener('change', async () => {
+    const file = imageUpload.files[0];
+    const img = await faceapi.bufferToImage(file);
+    const displaySize = { width: img.width, height: img.height };
+
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0);
+
+    const detection = await faceapi.detectSingleFace(img, new faceapi.TinyFaceDetectorOptions()).withAgeAndGender();
+
+    if (detection) {
+      const { age, gender, genderProbability } = detection;
+      resultText.innerText = `Estimated Age: ${age.toFixed(0)} years | Gender: ${gender} (${(genderProbability * 100).toFixed(1)}%)`;
+    } else {
+      resultText.innerText = 'No face detected. Please try another photo.';
+    }
+  });
+</script>
 <script>
   const mobileDatabase = {
     '98': { provider: 'Airtel', circle: 'Delhi' },
