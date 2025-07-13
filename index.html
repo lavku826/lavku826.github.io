@@ -78,7 +78,32 @@
   <label for="outputResult">Result:</label><br>
   <textarea id="outputResult" rows="4" cols="50" readonly></textarea>
 </div>
+<div class="tool-section" id="text-diff-checker">
+  <h2>📄 Text Difference Checker</h2>
+  <textarea id="text1" rows="6" cols="50" placeholder="Enter original text here..."></textarea><br><br>
+  <textarea id="text2" rows="6" cols="50" placeholder="Enter modified text here..."></textarea><br><br>
+  <button onclick="checkDifference()">Check Difference</button>
+  <pre id="diffResult" style="white-space: pre-wrap; margin-top: 10px;"></pre>
+</div>
 
+<script>
+function checkDifference() {
+  const text1 = document.getElementById('text1').value.split('\\n');
+  const text2 = document.getElementById('text2').value.split('\\n');
+  let result = '';
+  for (let i = 0; i < Math.max(text1.length, text2.length); i++) {
+    const t1 = text1[i] || '';
+    const t2 = text2[i] || '';
+    if (t1 !== t2) {
+      result += `🔻 Line ${i+1} changed:\\n- Original: ${t1}\\n+ Updated: ${t2}\\n\\n`;
+    }
+  }
+  if (result === '') {
+    result = '✅ No differences found.';
+  }
+  document.getElementById('diffResult').innerText = result;
+}
+</script>
 <script>
 function binaryToText() {
   const binaryStr = document.getElementById('binaryInput').value.trim();
