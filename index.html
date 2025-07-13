@@ -66,7 +66,42 @@
   <button onclick="getIP()">Find My IP Address</button>
   <p id="ipResult">Your IP will appear here...</p>
 </div>
+<div class="tool-section" id="binary-converter">
+  <h2>🧠 Binary ↔ Text Converter</h2>
 
+  <label for="binaryInput">Enter Binary or Text:</label><br>
+  <textarea id="binaryInput" rows="4" cols="50"></textarea><br><br>
+
+  <button onclick="binaryToText()">Convert to Text</button>
+  <button onclick="textToBinary()">Convert to Binary</button><br><br>
+
+  <label for="outputResult">Result:</label><br>
+  <textarea id="outputResult" rows="4" cols="50" readonly></textarea>
+</div>
+
+<script>
+function binaryToText() {
+  const binaryStr = document.getElementById('binaryInput').value.trim();
+  const binaryArr = binaryStr.split(' ');
+  let text = '';
+  for (let i = 0; i < binaryArr.length; i++) {
+    const charCode = parseInt(binaryArr[i], 2);
+    if (!isNaN(charCode)) {
+      text += String.fromCharCode(charCode);
+    }
+  }
+  document.getElementById('outputResult').value = text;
+}
+
+function textToBinary() {
+  const text = document.getElementById('binaryInput').value;
+  let binary = '';
+  for (let i = 0; i < text.length; i++) {
+    binary += text[i].charCodeAt(0).toString(2) + ' ';
+  }
+  document.getElementById('outputResult').value = binary.trim();
+}
+</script>
 <script>
   function getIP() {
     fetch('https://api.ipify.org?format=json')
