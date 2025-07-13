@@ -60,7 +60,27 @@
   <label><input type="checkbox" id="symbols"> Include Symbols</label><br>
   <button onclick="generatePassword()">Generate Password</button>
   <div class="output" id="passwordResult"></div>
-</div><script>
+</div>
+<div class="tool-section" id="ip-finder">
+  <h2>🌐 IP Address Finder</h2>
+  <button onclick="getIP()">Find My IP Address</button>
+  <p id="ipResult">Your IP will appear here...</p>
+</div>
+
+<script>
+  function getIP() {
+    fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('ipResult').innerText = `🔎 Your IP Address is: ${data.ip}`;
+      })
+      .catch(error => {
+        document.getElementById('ipResult').innerText = '⚠️ Unable to fetch IP address.';
+        console.error(error);
+      });
+  }
+</script>
+<script>
   function generatePassword() {
     const length = parseInt(document.getElementById("length").value);
     const useLower = document.getElementById("lowercase").checked;
