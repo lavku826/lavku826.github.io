@@ -108,7 +108,66 @@
   <button onclick="getIPInfo()">Find Info</button>
   <pre id="ipResult" style="white-space: pre-wrap; color: #0f0;"></pre>
 </div>
+<div class="tool-section" id="life-decision-tool">
+  <h2>🎲 Random Life Decision Maker</h2>
+  <p>Can't decide? Let destiny help you decide smartly.</p>
+  <label for="yourName">Your Name:</label>
+  <input type="text" id="yourName" placeholder="Enter your name"><br><br>
 
+  <label for="question">What's troubling you?</label>
+  <input type="text" id="question" placeholder="Type your question"><br><br>
+
+  <button onclick="makeLifeDecision()">Get a Destiny Suggestion</button>
+  <p id="decisionResult" style="margin-top:10px; color:cyan;"></p>
+</div>
+<div class="tool-section">
+  <h2>📱 QR Code Generator</h2>
+  <input type="text" id="qrInput" placeholder="Enter text or URL" />
+  <button onclick="generateQR()">Generate QR</button>
+  <br><br>
+  <div id="qrResult"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  function generateQR() {
+    const input = document.getElementById('qrInput').value;
+    const result = document.getElementById('qrResult');
+    result.innerHTML = '';
+    if (input.trim() !== '') {
+      new QRCode(result, {
+        text: input,
+        width: 200,
+        height: 200
+      });
+    }
+  }
+</script>
+<script>
+function makeLifeDecision() {
+  const name = document.getElementById("yourName").value.trim();
+  const question = document.getElementById("question").value.trim();
+
+  if (!name || !question) {
+    document.getElementById("decisionResult").innerText = \"Please enter both name and question.\";
+    return;
+  }
+
+  const responses = [
+    \"Take the leap, \" + name + \". Sometimes jumping is how you learn to fly.\",
+    \"Wait and reflect, \" + name + \". The right time always reveals itself.\",
+    name + \", this is your sign to say YES!\",
+    name + \", walk away. Peace is better than chaos.\",
+    \"Trust your heart, \" + name + \". It's wiser than your mind sometimes.\",
+    \"Seek advice from someone close. This is not a solo battle.\",
+    \"Your gut already knows the answer, \" + name + \".\",
+    \"Don't act in haste, \" + name + \". Sleep on it.\"
+  ];
+
+  const randomDecision = responses[Math.floor(Math.random() * responses.length)];
+  document.getElementById(\"decisionResult\").innerText = randomDecision;
+}
+</script>
 <script>
   async function getIPInfo() {
     const ip = document.getElementById('ipInput').value.trim();
