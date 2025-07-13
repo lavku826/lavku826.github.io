@@ -85,7 +85,46 @@
   <button onclick="checkDifference()">Check Difference</button>
   <pre id="diffResult" style="white-space: pre-wrap; margin-top: 10px;"></pre>
 </div>
+<div class="tool-section" id="mobile-number-finder">
+  <h2>📱 Mobile Number Series Finder</h2>
+  <input type="text" id="mobileInput" placeholder="Enter 10-digit mobile number" maxlength="10">
+  <button onclick="findMobileInfo()">Find Info</button>
+  <p id="mobileResult"></p>
+</div>
 
+<script>
+  const mobileDatabase = {
+    '98': { provider: 'Airtel', circle: 'Delhi' },
+    '99': { provider: 'Vodafone Idea', circle: 'Maharashtra' },
+    '97': { provider: 'Jio', circle: 'UP East' },
+    '96': { provider: 'BSNL', circle: 'Kerala' },
+    '95': { provider: 'Jio', circle: 'Bihar' },
+    '94': { provider: 'Airtel', circle: 'Tamil Nadu' },
+    '93': { provider: 'Vodafone', circle: 'West Bengal' },
+    '92': { provider: 'Idea', circle: 'MP & Chhattisgarh' },
+    '91': { provider: 'Jio', circle: 'Gujarat' },
+    '90': { provider: 'Airtel', circle: 'Haryana' },
+  };
+
+  function findMobileInfo() {
+    const number = document.getElementById('mobileInput').value;
+    const result = document.getElementById('mobileResult');
+
+    if (!/^[6-9]\\d{9}$/.test(number)) {
+      result.textContent = '❌ Please enter a valid 10-digit Indian mobile number.';
+      return;
+    }
+
+    const prefix = number.substring(0, 2);
+    const info = mobileDatabase[prefix];
+
+    if (info) {
+      result.innerHTML = `✅ Network: <b>${info.provider}</b><br>📍 Circle: <b>${info.circle}</b>`;
+    } else {
+      result.textContent = '❌ Info not found for this number series.';
+    }
+  }
+</script>
 <script>
 function checkDifference() {
   const text1 = document.getElementById('text1').value.split('\\n');
