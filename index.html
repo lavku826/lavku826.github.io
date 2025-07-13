@@ -102,7 +102,33 @@
   </div>
   <p id="result" style="margin-top: 10px;"></p>
 </div>
+<div class="tool-section" id="ip-finder">
+  <h2>🌐 IP Address & Location Finder</h2>
+  <input type="text" id="ipInput" placeholder="Enter IP Address or leave blank for your IP" />
+  <button onclick="getIPInfo()">Find Info</button>
+  <pre id="ipResult" style="white-space: pre-wrap; color: #0f0;"></pre>
+</div>
 
+<script>
+  async function getIPInfo() {
+    const ip = document.getElementById('ipInput').value.trim();
+    const query = ip ? ip : '';
+    const res = await fetch(`https://ipapi.co/${query}/json/`);
+    const data = await res.json();
+    const display = `
+IP: ${data.ip}
+City: ${data.city}
+Region: ${data.region}
+Country: ${data.country_name}
+Postal: ${data.postal}
+Latitude: ${data.latitude}
+Longitude: ${data.longitude}
+Timezone: ${data.timezone}
+Org: ${data.org}
+    `;
+    document.getElementById('ipResult').innerText = display;
+  }
+</script>
 <script>
   const imageUpload = document.getElementById('imageUpload');
   const resultText = document.getElementById('result');
